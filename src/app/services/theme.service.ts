@@ -1,11 +1,18 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ThemeService {
+    private renderer: Renderer2;
 
-    constructor() {
+    constructor(
+        @Inject(DOCUMENT) private document: Document,
+        private rendererFactory: RendererFactory2
+    ) {
+        this.renderer = rendererFactory.createRenderer(null, null);
+        
         if (!localStorage.getItem('darkMode'))
             this.disable();
 
@@ -24,12 +31,12 @@ export class ThemeService {
     }
 
     private enable() {
-        document.body.classList.add('darkMode');
+        this.renderer.setAttribute(this.document.body, 'class', 'darkMode');
         localStorage.setItem('darkMode', 'enabled');
     }
 
     private disable() {
-        document.body.classList.remove('darkMode');
+        this.renderer.setAttribute(this.document.body, 'class', '');
         localStorage.setItem('darkMode', 'disabled');
     }
 

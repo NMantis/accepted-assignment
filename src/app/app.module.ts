@@ -9,19 +9,23 @@ import { IndexComponent } from './pages/index/index.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './pages/header/header.component';
 import { MaterialModule } from './shared/material-module';
+import { CocktailCardComponent } from './pages/cocktail-card/cocktail-card.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
     AppComponent,
     PreviewComponent,
     IndexComponent,
-    HeaderComponent
+    HeaderComponent,
+    CocktailCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     MaterialModule,
+    LayoutModule,
     BrowserAnimationsModule
   ],
   providers: [],
