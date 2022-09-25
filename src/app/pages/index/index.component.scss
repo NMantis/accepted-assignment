@@ -5,3 +5,13 @@
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-gap: 12px;
+    padding: 8px 16px;
+    align-items: center;
+    height: 100%;
+    overflow: auto;
+}

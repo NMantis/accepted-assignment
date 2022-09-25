@@ -1,1 +1,10 @@
-<p>cocktail-card works!</p>
+
+<mat-card class="mat-elevation-z2" routerLink="preview/{{ drink.idDrink }}">
+    <img mat-card-image [src]="drink.strDrinkThumb" alt="Photo of a {{ drink.strDrink }}">
+
+    <mat-card-title>
+        <h3>
+            {{ drink.strDrink }}
+        </h3>
+    </mat-card-title>
+</mat-card>
