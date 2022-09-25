@@ -1,4 +1,7 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-preview',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreviewComponent implements OnInit {
 
-  constructor() { }
+  cocktail: any;
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   ngOnInit(): void {
+    this.route.data
+      .pipe(first())
+      .subscribe(({ cocktail }) => {
+        console.log(cocktail);
+        this.cocktail = cocktail
+      });
   }
 
+  goBack() {
+    this.location.back();
+  }
 }

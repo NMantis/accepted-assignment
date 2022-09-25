@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { auditTime, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { auditTime, first, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Cocktail } from 'src/app/models/Cocktail';
 import { CocktailCategory } from 'src/app/models/CocktailCategory';
 import { CocktailService } from 'src/app/services/cocktail.service';
@@ -21,16 +22,31 @@ export class IndexComponent implements OnInit, OnDestroy {
     query: new FormControl()
   });
 
-  constructor(private cocktailService: CocktailService) { }
+  constructor(
+    private cocktailService: CocktailService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.drinks$ = this.cocktailService.index();
+    /* Get all the cocktails from the resolver */
+    this.drinks$ = this.route.data
+      .pipe(
+        first(),
+        map(data => data['cocktails'])
+      );
+
+    /* Initiate categories */
     this.categories$ = this.cocktailService.categories();
 
     this.categoryListener();
     this.queryListener();
   }
 
+  /**
+   * @description Filter cocktails by category.
+   * Multiple filters are not supported by the API 
+   * so we clear the query input.
+   */
   private categoryListener() {
 
     this.form.get('category')!
@@ -42,6 +58,10 @@ export class IndexComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * @description Search by cocktail name. 
+   * Uses auditTime for request optimization.
+   */
   private queryListener() {
 
     this.form.get('query')!
@@ -51,7 +71,7 @@ export class IndexComponent implements OnInit, OnDestroy {
         takeUntil(this.destroyed$),
         tap(() => this.reset('category')),
       ).subscribe(query => {
-        if(query) {
+        if (query) {
           this.drinks$ = this.cocktailService.search(query);
         } else {
           this.drinks$ = this.cocktailService.index();
