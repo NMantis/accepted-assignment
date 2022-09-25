@@ -1,0 +1,37 @@
+
+mat-card {
+    margin: 1rem auto;
+    max-width: 400px;
+    width: 100%;
+
+    mat-card-title {
+        margin: 16px 0;
+    }
+}
+
+.mat-subheader {
+    display: flex;
+    align-items: center;
+    color: rgba(0,0,0,0.8);
+    font-size: 16px;
+
+    mat-icon {
+        margin-right: 8px;
+    }
+}
+
+.mat-list-item {
+    font-size: 0.9rem;
+}
+
+.mat-list-base .mat-list-item.mat-list-item-with-avatar, .mat-list-base .mat-list-option.mat-list-item-with-avatar {
+    height: 40px!important;
+}
+
+mat-list {
+    margin: 0 0 16px;
+}
+
+p {
+    margin-top: 12px;
+}

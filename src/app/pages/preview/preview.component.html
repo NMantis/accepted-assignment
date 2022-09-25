@@ -1,5 +1,45 @@
 <div class="wrapper">
-    <mat-card>
-        
+    <mat-card class="mat-elevation-z4">
+
+        <img mat-card-image [src]="cocktail.strDrinkThumb" alt="Photo of a {{ cocktail.strDrink }}">
+
+        <mat-card-title>
+            {{ cocktail.strDrink }}
+        </mat-card-title>
+
+        <mat-card-content>
+
+            <mat-list>
+
+                <div mat-subheader>
+                    <mat-icon mat-list-icon>
+                        liquor
+                    </mat-icon>
+                    Ingridients
+                </div>
+                <mat-divider></mat-divider>
+
+                <mat-list-item *ngFor="let ing of cocktail.ingridients">
+                    <mat-icon mat-list-icon color="primary">
+                        arrow_right
+                    </mat-icon>
+                    <div mat-line>{{ ing }}</div>
+                </mat-list-item>
+
+            </mat-list>
+
+            <div mat-subheader>
+                <mat-icon mat-list-icon>
+                    info
+                </mat-icon>
+                Instructions
+            </div>
+            <mat-divider></mat-divider>
+
+            <p>
+                {{ cocktail.strInstructions }}
+            </p>
+        </mat-card-content>
+
     </mat-card>
 </div>

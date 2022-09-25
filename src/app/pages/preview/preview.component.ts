@@ -11,6 +11,7 @@ import { first } from 'rxjs';
 export class PreviewComponent implements OnInit {
 
   cocktail: any;
+  
   constructor(
     private route: ActivatedRoute,
     private location: Location

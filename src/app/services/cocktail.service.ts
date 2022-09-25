@@ -4,7 +4,6 @@ import { map, Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 import { Cocktail } from '../models/Cocktail';
 import { CocktailCategory } from '../models/CocktailCategory';
-import { Filters } from '../models/Filters';
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +19,13 @@ export class CocktailService {
       .pipe(map(resp => resp.drinks));
   }
 
-  categories(): Observable<CocktailCategory[]> {
-    const params = new HttpParams().set('c', 'list');
-
-    return this.http.get<{ drinks: CocktailCategory[] }>(`${env.baseUrl}/list.php`, { params })
-      .pipe(map(resp => resp.drinks));
-  }
-
-  show(id: string) {
+  show(id: string): Observable<Cocktail> {
     const params = new HttpParams().set('i', id);
-    return this.http.get<any>(`${env.baseUrl}/lookup.php`, { params })
+    return this.http.get<{ drinks: Cocktail[] }>(`${env.baseUrl}/lookup.php`, { params })
+      .pipe(
+        map(resp => resp.drinks[0]),
+        map(drink => new Cocktail(drink)),
+      );
   }
 
   filter(category: string): Observable<Cocktail[]> {
@@ -44,6 +40,12 @@ export class CocktailService {
 
     return this.http.get<any>(`${env.baseUrl}/search.php`, { params })
       .pipe(map(resp => resp.drinks));
+  }
 
+  categories(): Observable<CocktailCategory[]> {
+    const params = new HttpParams().set('c', 'list');
+
+    return this.http.get<{ drinks: CocktailCategory[] }>(`${env.baseUrl}/list.php`, { params })
+      .pipe(map(resp => resp.drinks));
   }
 }
