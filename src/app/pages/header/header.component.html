@@ -1,5 +1,9 @@
 <mat-toolbar>
 
+    <button mat-icon-button (click)="goBack()" *ngIf="showBtn">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+
     <span class="spacer"></span>
 
     <button mat-button (click)="toggleTheme()">

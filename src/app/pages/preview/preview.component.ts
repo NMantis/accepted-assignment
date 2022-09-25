@@ -1,7 +1,7 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
+import { Cocktail } from 'src/app/models/Cocktail';
 
 @Component({
   selector: 'app-preview',
@@ -10,23 +10,14 @@ import { first } from 'rxjs';
 })
 export class PreviewComponent implements OnInit {
 
-  cocktail: any;
-  
-  constructor(
-    private route: ActivatedRoute,
-    private location: Location
-  ) { }
+  cocktail: Cocktail;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.data
       .pipe(first())
-      .subscribe(({ cocktail }) => {
-        console.log(cocktail);
-        this.cocktail = cocktail
-      });
+      .subscribe(({ cocktail }) => this.cocktail = cocktail);
   }
 
-  goBack() {
-    this.location.back();
-  }
 }
