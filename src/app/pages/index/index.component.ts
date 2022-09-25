@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { auditTime, filter, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { auditTime, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Cocktail } from 'src/app/models/Cocktail';
 import { CocktailCategory } from 'src/app/models/CocktailCategory';
 import { CocktailService } from 'src/app/services/cocktail.service';
@@ -47,10 +47,16 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.form.get('query')!
       .valueChanges
       .pipe(
-        auditTime(400),
+        auditTime(500),
         takeUntil(this.destroyed$),
         tap(() => this.reset('category')),
-      ).subscribe(query => this.drinks$ = this.cocktailService.search(query));
+      ).subscribe(query => {
+        if(query) {
+          this.drinks$ = this.cocktailService.search(query);
+        } else {
+          this.drinks$ = this.cocktailService.index();
+        }
+      });
 
   }
 
