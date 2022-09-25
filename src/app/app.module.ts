@@ -11,6 +11,7 @@ import { HeaderComponent } from './pages/header/header.component';
 import { MaterialModule } from './shared/material-module';
 import { CocktailCardComponent } from './pages/cocktail-card/cocktail-card.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     HttpClientModule,
     MaterialModule,
     LayoutModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule
   ],
   providers: [],

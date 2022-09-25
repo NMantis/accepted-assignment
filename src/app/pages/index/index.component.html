@@ -1,17 +1,17 @@
 
-<div class="filter-row">
+<div class="filter-row" [formGroup]="form">
     <mat-form-field appearance="outline">
         <mat-label>Search</mat-label>
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput>
+        <input matInput formControlName="query">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
         <mat-label>Categories</mat-label>
 
-        <mat-select>
+        <mat-select formControlName="category">
             <mat-option>All</mat-option>
-            <mat-option *ngFor="let category of (categories$ | async)">
+            <mat-option *ngFor="let category of (categories$ | async)" [value]="category.strCategory">
                 {{ category.strCategory }}
             </mat-option>
         </mat-select>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
@@ -14,16 +14,36 @@ export class CocktailService {
   constructor(private http: HttpClient) { }
 
   index(): Observable<Cocktail[]> {
-    return this.http.get<{ drinks: Cocktail[] }>(`${env.baseUrl}/filter.php?a=Alcoholic`)
+    const params = new HttpParams().set('a', 'Alcoholic');
+
+    return this.http.get<{ drinks: Cocktail[] }>(`${env.baseUrl}/filter.php`, { params })
       .pipe(map(resp => resp.drinks));
   }
 
   categories(): Observable<CocktailCategory[]> {
-    return this.http.get<{ drinks: CocktailCategory[] }>(`${env.baseUrl}/list.php?c=list`)
-      .pipe(map(resp => resp.drinks))
+    const params = new HttpParams().set('c', 'list');
+
+    return this.http.get<{ drinks: CocktailCategory[] }>(`${env.baseUrl}/list.php`, { params })
+      .pipe(map(resp => resp.drinks));
   }
 
   show(id: string) {
+    const params = new HttpParams().set('i', id);
+    return this.http.get<any>(`${env.baseUrl}/lookup.php`, { params })
+  }
+
+  filter(category: string): Observable<Cocktail[]> {
+    const params = new HttpParams().set('c', category);
+
+    return this.http.get<{ drinks: Cocktail[] }>(`${env.baseUrl}/filter.php`, { params })
+      .pipe(map(resp => resp.drinks));
+  }
+
+  search(query: string): Observable<Cocktail[]> {
+    const params = new HttpParams().set('s', query);
+
+    return this.http.get<any>(`${env.baseUrl}/search.php`, { params })
+      .pipe(map(resp => resp.drinks));
 
   }
 }
